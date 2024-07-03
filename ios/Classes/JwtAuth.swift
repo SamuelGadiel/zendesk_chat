@@ -10,12 +10,15 @@ import ChatProvidersSDK
 
 class JWTAuth: NSObject, JWTAuthenticator {
     private let token: String
+    private let result: FlutterResult
 
-    init(token: String) {
+    init(result: @escaping FlutterResult, token: String) {
         self.token = token
+        self.result = result
     }
 
     func getToken(_ completion: @escaping (String?, Error?) -> Void) {
         completion(token, nil)
+        result(true)
     }
 }

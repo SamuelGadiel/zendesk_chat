@@ -65,6 +65,10 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
         case "unregisterPushToken":
             unregisterPushToken()
             result(true)
+        case "setIdentity":
+            setIdentity(dictionary: dic!, result: result)
+        case "resetIdentity":
+            resetIdentity(result: result)
         default:
             result("iOS " + UIDevice.current.systemVersion)
         }
@@ -228,12 +232,20 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
         return
     }
     
-    private func setIdentity(dictionary: Dictionary<String, Any>) {
+    private func setIdentity(dictionary: Dictionary<String, Any>, result: @escaping FlutterResult) {
         guard let jwtToken = dictionary["token"] as? String else {
             return
          }
         
-        Chat.instance?.setIdentity(authenticator: JWTAuth(token: jwtToken))
+        Chat.instance?.setIdentity(authenticator: JWTAuth(
+            result: result,
+            token: jwtToken))
+    }
+
+    private func resetIdentity(result: @escaping FlutterResult) {
+        Chat.instance?.resetIdentity {
+            result(true)
+        }
     }
 }
 

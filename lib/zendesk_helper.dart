@@ -137,4 +137,9 @@ class Zendesk {
       'token': jwtToken,
     });
   }
+
+  /// Reset the identity of the user
+  static Future<void> resetIdentity() async {
+    await _channel.invokeMethod<void>('resetIdentity');
+  }
 }

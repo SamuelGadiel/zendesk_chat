@@ -91,7 +91,12 @@ try {
         unregisterPushToken(result)
       }
       "setIdentity" -> {
-        setIdentity(call);
+        setIdentity(call)
+        result.success(true)
+      }
+      "resetIdentity" -> {
+        resetIdentity()
+        result.success(true)
       }
       else -> {
         result.notImplemented()
@@ -247,5 +252,9 @@ try {
     }
 
     Chat.INSTANCE.setIdentity { jwtCompletion -> jwtCompletion?.onTokenLoaded(jwtToken); }
+  }
+  
+  private fun resetIdentity() {
+    Chat.INSTANCE.resetIdentity()
   }
 }
