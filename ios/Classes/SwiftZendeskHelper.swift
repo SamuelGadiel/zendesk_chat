@@ -63,7 +63,8 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
         case "registerPushToken":
             registerPushToken(dictionary: dic!, flutterResult: result)
         case "unregisterPushToken":
-            result(unregisterPushToken())
+            unregisterPushToken()
+            result(true)
         default:
             result("iOS " + UIDevice.current.systemVersion)
         }
@@ -128,7 +129,7 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
                                                        email: isPreChatEmailField ? .optional : .hidden,
                                                        phoneNumber: isPreChatPhoneField ? .optional : .hidden)
         
-        let chatMenuActions = disableEndChatMenuAction ?  [] : [.emailTranscript, .endChat] as Array<ChatMenuAction>         
+        let chatMenuActions = disableEndChatMenuAction ?  [] : [.emailTranscript, .endChat] as Array<ChatMenuAction>
         // Chat configuration
         let chatConfiguration = ChatConfiguration()
         chatConfiguration.isPreChatFormEnabled = isPreChatFormEnabled
@@ -144,8 +145,15 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
         
         navController.viewControllers = [viewController]
         
-        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: dictionary["close"] as? String ?? "Fechar", style: .plain, target: self, action: #selector(backButton))
-        viewController.title = dictionary["title"] as? String ?? "Suporte"
+        if let isFullscreen = dictionary["isFullscreen"] as? Bool, isFullscreen, #available(iOS 13.0, *){
+            navController.modalPresentationStyle = .fullScreen
+        }
+        
+        if let closeButtonText = dictionary["close"] as? String {
+            viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(title: closeButtonText, style: .plain, target: self, action: #selector(backButton))
+        }
+        
+        viewController.title = dictionary["toolbarTitle"] as? String ?? "Support"
         if let theme = dictionary["isDarkTheme"] as? Bool {
             if #available(iOS 13.0, *) {
                 viewController.overrideUserInterfaceStyle = theme ? .dark : .light
@@ -153,20 +161,21 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
                 // Fallback on earlier versions
             }
         }
-
+        
         presentViewController(rootViewController: rootViewController, view: navController);
     }
     
     
     func presentViewController(rootViewController: UIViewController?, view: UIViewController) {
-        if var topController = UIApplication.shared.keyWindow?.rootViewController  {
-                       while let presentedViewController = topController.presentedViewController {
-                             topController = presentedViewController
-                            }
-                 topController.present(view, animated: true, completion: nil)
+        guard var topController = UIApplication.shared.keyWindow?.rootViewController else {
+            return
         }
+        while let presentedViewController = topController.presentedViewController {
+            topController = presentedViewController
+        }
+        topController.present(view, animated: true, completion: nil)
     }
-
+    
     func uiColorFromHex(rgbValue: Int) -> UIColor {
         let red =   CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0
         let green = CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0
@@ -181,45 +190,50 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
             chatAPIConfig = ChatAPIConfiguration()
         }
     }
-
-
+    
+    
     func sendMessage(dictionary: Dictionary<String, Any>) {
         guard let message = dictionary["message"] as? String
         else { return }
         
         Chat.instance?.chatProvider.sendMessage(message)
     }
-
+    
     private func endChat(completionHandler: @escaping ((Result<Bool, DeliveryStatusError>) -> Void)) -> Bool {
         guard let chatProvider = Chat.instance?.chatProvider,
-          chatProvider.chatState.isChatting else {
+              chatProvider.chatState.isChatting else {
             return false
         }
-
+        
         chatProvider.endChat(completionHandler)
         return true
     }
     
     private func registerPushToken(dictionary: Dictionary<String, Any>, flutterResult: FlutterResult) {
         guard let pushProvider = Chat.instance?.pushNotificationsProvider,
-            let pushToken = dictionary["pushToken"] as? String else {
+              let pushToken = dictionary["pushToken"] as? String else {
             flutterResult(FlutterError(code: "pushToken", message: "pushToken is nil", details: nil))
             return
         }
-
+        
         pushProvider.registerPushTokenString(pushToken)
         flutterResult(true)
     }
     
-    private func unregisterPushToken() -> Bool {
+    private func unregisterPushToken() {
         guard let pushProvider = Chat.instance?.pushNotificationsProvider else {
-            return true
+            return
         }
-        do {
-            try pushProvider.unregisterPushToken()
-            return true
-        } catch {
-            return false
-        }
+        pushProvider.unregisterPushToken()
+        return
+    }
+    
+    private func setIdentity(dictionary: Dictionary<String, Any>) {
+        guard let jwtToken = dictionary["token"] as? String else {
+            return
+         }
+        
+        Chat.instance?.setIdentity(authenticator: JWTAuth(token: jwtToken))
     }
 }
+

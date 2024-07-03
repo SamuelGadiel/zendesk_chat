@@ -90,6 +90,9 @@ try {
       "unregisterPushToken" -> {
         unregisterPushToken(result)
       }
+      "setIdentity" -> {
+        setIdentity(call);
+      }
       else -> {
         result.notImplemented()
       }
@@ -235,5 +238,14 @@ try {
 
     pushProvider.unregisterPushToken()
     flutterResult.success(true)
+  }
+
+  private fun setIdentity(call: MethodCall) {
+    val jwtToken = call.argument<String>("token")
+    if (jwtToken.isNullOrEmpty()){
+      return;
+    }
+
+    Chat.INSTANCE.setIdentity { jwtCompletion -> jwtCompletion?.onTokenLoaded(jwtToken); }
   }
 }
