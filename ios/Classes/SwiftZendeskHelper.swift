@@ -66,7 +66,8 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
             unregisterPushToken()
             result(true)
         case "setIdentity":
-            setIdentity(dictionary: dic!, result: result)
+            setIdentity(dictionary: dic!)
+            result(true)
         case "resetIdentity":
             resetIdentity(result: result)
         default:
@@ -232,7 +233,7 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
         return
     }
     
-    private func setIdentity(dictionary: Dictionary<String, Any>, result: @escaping FlutterResult) {
+    private func setIdentity(dictionary: Dictionary<String, Any>) {
         guard let jwtToken = dictionary["token"] as? String else {
             return
          }
@@ -242,8 +243,6 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
         Chat.instance?.setIdentity(authenticator: authenticator)
         
         authenticator.waitGetTokenSucceed()
-        
-        result(true)
     }
 
     private func resetIdentity(result: @escaping FlutterResult) {
