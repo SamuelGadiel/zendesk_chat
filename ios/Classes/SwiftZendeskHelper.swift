@@ -237,9 +237,13 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
             return
          }
         
-        Chat.instance?.setIdentity(authenticator: JWTAuth(
-            result: result,
-            token: jwtToken))
+        let authenticator = JWTAuth(token: jwtToken)
+        
+        Chat.instance?.setIdentity(authenticator: authenticator)
+        
+        authenticator.waitGetTokenSucceed()
+        
+        result(true)
     }
 
     private func resetIdentity(result: @escaping FlutterResult) {

@@ -11,18 +11,33 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  late final TextEditingController _tokenController;
+
   @override
   void initState() {
     super.initState();
+    _tokenController = TextEditingController();
     initZendesk();
+  }
+
+  @override
+  void dispose() {
+    _tokenController.dispose();
+    super.dispose();
   }
 
   Future<void> initZendesk() async {
     if (!mounted) {
       return;
     }
-    const _accountKey = 'C4NkxGBoxHSTMW3Gm3gznZ6AxIqYXWkZ';
-    const _appId = 'ff92947363297c35ad960e50edc747e7a19dbbd7235a852e';
+    const _accountKey = String.fromEnvironment(
+      'ACCOUNT_KEY',
+      defaultValue: 'C4NkxGBoxHSTMW3Gm3gznZ6AxIqYXWkZ',
+    );
+    const _appId = String.fromEnvironment(
+      'APP_ID',
+      defaultValue: 'ff92947363297c35ad960e50edc747e7a19dbbd7235a852e',
+    );
 
     await Zendesk.initialize(_accountKey, _appId);
   }
@@ -45,6 +60,16 @@ class _MyAppState extends State<MyApp> {
                   textAlign: TextAlign.center,
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.all(16),
+                child: TextField(
+                  controller: _tokenController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter your token',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+              ),
               MaterialButton(
                 onPressed: openChat,
                 color: Colors.blueGrey,
@@ -60,11 +85,15 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> openChat() async {
     try {
-      await Zendesk.setVisitorInfo(
-          name: 'Text Client',
-          email: 'test+client@example.com',
-          phoneNumber: '0000000000',
-          department: 'Support');
+      if (_tokenController.text.isEmpty) {
+        await Zendesk.setVisitorInfo(
+            name: 'Text Client',
+            email: 'test+client@example.com',
+            phoneNumber: '0000000000',
+            department: 'Support');
+      } else {
+        await Zendesk.setIdentity(_tokenController.text.trim());
+      }
       await Zendesk.startChat(primaryColor: Colors.red);
     } catch (ex) {
       print('An error occured $ex');
