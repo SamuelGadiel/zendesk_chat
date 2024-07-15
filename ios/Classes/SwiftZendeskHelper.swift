@@ -113,6 +113,10 @@ public class SwiftZendeskHelper: NSObject, FlutterPlugin {
     }
     
     func startChat(dictionary: Dictionary<String, Any>) throws {
+        if (navController.isBeingPresented) {
+            return
+        }
+        
         guard let isPreChatFormEnabled = dictionary["isPreChatFormEnabled"] as? Bool,
               let isPreChatEmailField = dictionary["isPreChatEmailField"] as? Bool,
               let isPreChatNameField = dictionary["isPreChatNameField"] as? Bool,
