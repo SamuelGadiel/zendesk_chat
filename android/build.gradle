@@ -26,9 +26,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    // if (project.android.hasProperty("namespace")) {
+    if (project.android.hasProperty("namespace")) {
         namespace = "com.samuelgadiel.zendesk.chat"
-    // }
+    }
 
     compileSdk = 35
 
