@@ -30,15 +30,16 @@ android {
         namespace = "com.samuelgadiel.zendesk.chat"
     // }
 
-    compileSdkVersion 33
+    compileSdk = 35
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
-    defaultConfig {
-        minSdkVersion 16
     }
     lintOptions {
         disable 'InvalidPackage'
+    defaultConfig {
+        minSdk = 21
     }
 }
 
