@@ -5,6 +5,8 @@ description: Demonstrates how to use the zendesk plugin.
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
+version: 3.1.0
+
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
@@ -13,9 +15,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  zendesk_helper:
+  zendesk_chat:
     # When depending on this package from a real application you should use:
-    #   zendesk_helper: ^x.y.z
+    #   zendesk_chat: ^x.y.z
     # See https://dart.dev/tools/pub/dependencies#version-constraints
     # The example app is bundled with the plugin so we use a path dependency on
     # the parent directory to use the current plugin's version.
