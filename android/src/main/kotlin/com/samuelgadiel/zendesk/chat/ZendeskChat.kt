@@ -1,4 +1,4 @@
-package com.muljin.zendesk
+package com.samuelgadiel.zendesk.chat
 
 import android.app.Activity
 import androidx.annotation.NonNull
@@ -17,8 +17,8 @@ import zendesk.classic.messaging.MessagingActivity
 import java.lang.reflect.Method
 
 
-/** ZendeskHelper */
-class ZendeskHelper : FlutterPlugin, MethodCallHandler, ActivityAware {
+/** ZendeskChat */
+class ZendeskChat : FlutterPlugin, MethodCallHandler, ActivityAware {
   // / The MethodChannel that will the communication between Flutter and native Android
   // /
   // / This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -253,7 +253,7 @@ try {
 
     Chat.INSTANCE.setIdentity { jwtCompletion -> jwtCompletion?.onTokenLoaded(jwtToken); }
   }
-  
+
   private fun resetIdentity() {
     Chat.INSTANCE.resetIdentity()
   }
