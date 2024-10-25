@@ -1,4 +1,4 @@
-## 3.0.1
+## 3.1.0
 
 - Upgrade Zendesk messaging plugin;
 - Upgrade Flutter version, gradle, kotlin, AGP;
