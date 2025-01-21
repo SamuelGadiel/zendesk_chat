@@ -1,8 +1,8 @@
-name: zendesk_chat
+name: zendesk_helper_plus
 description: A Flutter plugin for the Zendesk Chat SDK v2. Provides embed chat functionality in your apps to give your mobile users access to your support team
 version: 3.1.1
 homepage: https://github.com/SamuelGadiel
-repository: https://github.com/SamuelGadiel/zendesk_chat
+repository: https://github.com/SamuelGadiel/zendesk_helper_plus
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -20,7 +20,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.samuelgadiel.zendesk.chat
+        package: com.samuelgadiel.zendesk.helper.plus
         pluginClass: ZendeskChat
       ios:
         pluginClass: ZendeskChat

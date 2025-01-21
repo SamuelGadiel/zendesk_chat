@@ -1,6 +1,6 @@
 //
 //  JwtAuth.swift
-//  zendesk_chat
+//  zendesk_helper_plus
 //
 
 import Foundation

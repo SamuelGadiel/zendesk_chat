@@ -1,4 +1,4 @@
-package com.samuelgadiel.zendesk.chat
+package com.samuelgadiel.zendesk.helper.plus
 
 import android.app.Activity
 import androidx.annotation.NonNull

@@ -3,7 +3,7 @@
 # Run `pod lib lint zendesk.podspec' to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'zendesk_chat'
+  s.name             = 'zendesk_helper_plus'
   s.version          = '0.0.1'
   s.license          = { :file => '../LICENSE' }
   s.source           = { :path => '.' }

@@ -1,4 +1,4 @@
-group 'com.samuelgadiel.zendesk.chat'
+group 'com.samuelgadiel.zendesk.helper.plus'
 version '1.0-SNAPSHOT'
 
 buildscript {
@@ -27,7 +27,7 @@ apply plugin: "kotlin-android"
 
 android {
     if (project.android.hasProperty("namespace")) {
-        namespace = "com.samuelgadiel.zendesk.chat"
+        namespace = "com.samuelgadiel.zendesk.helper.plus"
     }
 
     compileSdk = 35

@@ -1,4 +1,4 @@
-package com.samuelgadiel.zendesk.chat_example
+package com.samuelgadiel.zendesk.helper.plus_example
 
 import io.flutter.embedding.android.FlutterActivity
 
