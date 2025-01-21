@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'zendesk_helper_plus'
-  s.version          = '0.0.1'
+  s.version          = '3.1.2'
   s.license          = { :file => '../LICENSE' }
   s.source           = { :path => '.' }
   s.authors          = { 'Muljin LTD' => 'omar250abdo@gmail.com',

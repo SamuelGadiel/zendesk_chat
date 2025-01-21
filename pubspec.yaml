@@ -21,6 +21,6 @@ flutter:
     platforms:
       android:
         package: com.samuelgadiel.zendesk.helper.plus
-        pluginClass: ZendeskChat
+        pluginClass: ZendeskHelperPlus
       ios:
-        pluginClass: ZendeskChat
+        pluginClass: ZendeskHelperPlus

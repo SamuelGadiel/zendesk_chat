@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Zendesk Chat Plugin'),
+          title: const Text('Zendesk Helper Plus - Plugin Example'),
         ),
         body: Center(
           child: Column(
@@ -86,11 +86,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> openChat() async {
     try {
       if (_tokenController.text.isEmpty) {
-        await Zendesk.setVisitorInfo(
-            name: 'Text Client',
-            email: 'test+client@example.com',
-            phoneNumber: '0000000000',
-            department: 'Support');
+        await Zendesk.setVisitorInfo(name: 'Text Client', email: 'test+client@example.com', phoneNumber: '0000000000', department: 'Support');
       } else {
         await Zendesk.setIdentity(_tokenController.text.trim());
       }

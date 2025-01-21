@@ -7,7 +7,7 @@ import CommonUISDK
 import MessagingSDK
 
 
-public class SwiftZendeskChat: NSObject, FlutterPlugin {
+public class SwiftZendeskHelperPlus: NSObject, FlutterPlugin {
     var chatAPIConfig: ChatAPIConfiguration?
     let navController = UINavigationController()
     let rootViewController = UIApplication.shared.windows.filter({ (w) -> Bool in
@@ -16,7 +16,7 @@ public class SwiftZendeskChat: NSObject, FlutterPlugin {
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "zendesk", binaryMessenger: registrar.messenger())
-        let instance = SwiftZendeskChat()
+        let instance = SwiftZendeskHelperPlus()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
 

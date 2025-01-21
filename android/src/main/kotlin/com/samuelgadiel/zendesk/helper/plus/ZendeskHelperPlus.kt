@@ -17,8 +17,8 @@ import zendesk.classic.messaging.MessagingActivity
 import java.lang.reflect.Method
 
 
-/** ZendeskChat */
-class ZendeskChat : FlutterPlugin, MethodCallHandler, ActivityAware {
+/** ZendeskHelperPlus */
+class ZendeskHelperPlus : FlutterPlugin, MethodCallHandler, ActivityAware {
   // / The MethodChannel that will the communication between Flutter and native Android
   // /
   // / This local reference serves to register the plugin with the Flutter Engine and unregister it

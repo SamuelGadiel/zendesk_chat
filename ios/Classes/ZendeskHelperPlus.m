@@ -1,4 +1,4 @@
-#import "ZendeskChat.h"
+#import "ZendeskHelperPlus.h"
 #if __has_include(<zendesk_helper_plus/zendesk_helper_plus-Swift.h>)
 #import <zendesk_helper_plus/zendesk_helper_plus-Swift.h>
 #else
@@ -8,8 +8,8 @@
 #import "zendesk_helper_plus-Swift.h"
 #endif
 
-@implementation ZendeskChat
+@implementation ZendeskHelperPlus
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  [SwiftZendeskChat registerWithRegistrar:registrar];
+  [SwiftZendeskHelperPlus registerWithRegistrar:registrar];
 }
 @end
